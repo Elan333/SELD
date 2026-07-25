@@ -38,8 +38,6 @@ SELD integrates infrared physical saliency, self-supervised semantic representat
 
 > **Figure.** Overall pipeline of SELD. The framework progressively transforms weak infrared target candidates into reliable pseudo labels and finally learns a detector through self-training.
 
-*(The framework figure will be uploaded together with the source code.)*
-
 ---
 
 ## ✨ Highlights
