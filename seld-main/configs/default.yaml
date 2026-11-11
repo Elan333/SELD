@@ -1,0 +1,82 @@
+data_root: ./datasets/MMFW-UAV-DATASET
+split_dir: Bottom_Up
+image_dir: Infrared_Imgs
+annotation_dir: Infrared_Anns
+sequences: []
+
+dinov3_repo: ./dinov3
+dinov3_weights: ./models/trained_weights/dinov3-vitl16-pretrain-lvd1689m
+yolo_weights: ./models/trained_weights/yolo11s.pt
+final_weights: ./models/trained_weights/seld_yolo11s.pt
+
+candidates: ./outputs/all_candidates.json
+pseudo_dataset: ./outputs/pseudouavdata
+yolo_project: ./outputs/yolo
+
+seed: 42
+device: cuda
+max_frames_per_sequence: 0
+
+lcm:
+  scales: [3, 5, 7]
+  peak_sigma: 1.5
+
+roi:
+  size: 384
+  top_k: 4
+
+attention:
+  layers: [10, 21]
+  heads: 16
+  storage_tokens: 4
+  head_weights: {0: 0.25, 1: 0.10, 2: 0.10, 6: 0.10, 8: 0.10, 15: 0.35}
+
+morphology:
+  patch_size: 16
+  min_patch_area: 1
+  max_patch_area: 12
+  min_compactness: 0.02
+  compactness_factor: 0.6
+  max_aspect_ratio: 3.5
+  cr_threshold: 0.01
+  border_margin: 2
+  max_boxes_per_roi: 3
+
+detection:
+  nms_iou: 0.20
+  iou_threshold: 0.15
+  conf: 0.001
+
+tracking:
+  max_distance: 45
+  buffer_len: 4
+  min_hits: 2
+  grace_frames: 2
+
+scoring:
+  w_t: 2.0
+  top_ratio: 0.675
+
+yolo:
+  epochs_stage1: 50
+  epochs_stage2: 50
+  freeze: 10
+  imgsz: 1280
+  batch: 8
+  device: 0
+  patience: 50
+  nms_iou: 0.15
+  amp: false
+  cos_lr: true
+  close_mosaic: 10
+  mosaic: 1.0
+  mixup: 0.15
+  copy_paste: 0.1
+  scale: 0.5
+  hsv_h: 0.015
+  hsv_s: 0.7
+  hsv_v: 0.4
+  degrees: 10.0
+  translate: 0.2
+  fliplr: 0.5
+  flipud: 0.0
